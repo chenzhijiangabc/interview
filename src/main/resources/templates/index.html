@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--Bootstrap-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>前台</title>
+    <!--jquery-->
+    <script th:src="@{webjars/jquery/3.4.1/jquery.js}" ></script>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--index____script-->
+    <script>
+        function  add() {
+// 1.发送数据到后台
+            var datafrom=$("#myform").serialize();
+            $.ajax({type:"post",
+                url:"/AddBaseMessage",
+                data:datafrom,
+                success:function (respone) {
+                    $("#msg").html(respone.message);
+                    if (respone.suceess) {     //添加成功   修改页面数据
+                        //   1.修改姓名
+                        $("#myname").html("");
+                        $("#myname").html("czj");
+
+                        //     2.修改性别
+                        $("#mysex").html("");
+                        if (respone.user.sex = 1) {
+                            $("#myname").html("男");
+                        } else {
+                            $("#myname").html("女");
+                        }
+                        //  3.修改民族
+                        $("#myname").html("");
+                        $("#myname").html(respone.message.nickName + "|");
+                        //    4.修改政治面貌
+                        if (sourceType == 1) {
+                            $("#sourceType").html("");
+                        }
+                        if (sourceType == 2 || sourceType == 3 || sourceType == 4 || sourceType == 5 || sourceType == 3) {
+                            $("#myname").html("");
+                            $("#myname").html(respone.message.nickName + "|");
+                        }
+                    //    修改手机号码
+                        $("#myname").html("");
+                        $("#myname").html(respone.message.nickName + "|");
+
+
+                    }
+
+                }
+            });
+
+        //   2.关闭模态框
+        $("#baseModal").modal("hide");
+        }
+
+
+
+    </script>
+
+
+</head>
+<body style="background-color: gainsboro">
+
+<!--导航栏-->
+<div class="row" style="background-color: white">
+    <div class="col-md-8">
+        <div class="container">
+            <div class=".pull-right">
+                <strong style="font-family: 黑体;font-size:20px;letter-spacing: 2px">陈芝江的个人简历制作模板</strong>
+            </div>
+        </div>
+        </div>
+    <div class="col-md-4">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">编辑简历</a></li>
+            <li><a href="#">编辑作品集</a></li>
+            <li><a href="#">登录</a></li>
+            <li><a href="#">个人主页</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--空行-->
+
+<div class="row" style="margin-top: 40px">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-6">
+        <div class="container" style="background-color: white">
+        <!--时间   排版在最右边-->
+            <div class="container">
+                <span class="text-muted pull-right" style="margin-top: 20px;margin-right: 15px">最后更新时间:2019/08/29</span>
+            </div>
+        <!--上传的图片-->
+            <div class="container">
+                <img   class="center-block" src="../czj.jpg" style="width:100px;height: 140px">
+            </div>
+        <!--排版的姓名和编辑按钮-->
+            <div class="container" style="margin-top: 20px">
+                <div class="center-block"  style="width: 500px;text-align: center">
+                    <strong style="font-family: 黑体;font-size: 25px;margin-left: 25px" id="myname">陈芝江</strong>
+                    <a style="position: relative;left: 400px;color: deepskyblue;font-size: 15px"  data-toggle="modal"  data-target="#baseModal">编辑</a>
+                </div>
+            </div>
+            <!--性别居中显示-->
+            <div class="container">
+                <div class="center-block" style="width:150px;text-align: center">
+                    <strong style="font-family: 黑体;font-size:15px" id="mysex">男</strong>
+                </div>
+            </div>
+
+           <!--民族|籍贯|政治面貌-->
+            <div class="container" >
+                <div class="center-block" style="width:250px;text-align: center">
+                    <span style="font-family: 黑体;font-size:15px" class="text-muted">汉|</span>
+                    <span style="font-family: 黑体;font-size:15px" class="text-muted" id="mysourceType">公青团员|</span>
+                    <span style="font-family: 黑体;font-size:15px" class="text-muted">籍贯 广东 湛江</span>
+                </div>
+            </div>
+
+
+            <!--联系方式居中显示-->
+            <div class="container" style="margin-top: 10px">
+                <div class="center-block" style="width:300px;">
+                        <span class="glyphicon glyphicon-phone-alt pull-left" aria-hidden="true" id="myphone">13232708141</span>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-left: 40px" id="myemail">851084575@qq.com</span>
+                        <span class="glyphicon glyphicon-user pull-left" aria-hidden="true" style="margin-top: 15px" id="myQQ"> 851084575</span>
+                </div>
+            </div>
+
+            <!--下划线-->
+            <h5 class="page-header"></h5>
+
+
+            <!--基本信息的模态框-->
+            <div class="modal fade" id="baseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">添加个人基本信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!--添加信息的表单-->
+                            <form class="form-inline" method="post" id="myform" >
+                                <div class="form-group">
+                                    <label for="name">姓名</label>
+                                    <input type="text" id="name"  name="name"   class="form-control" placeholder="请输入姓名" style="width:150px;height: 40px;margin-left: 20px">
+                                </div>
+                                <div class="form-group" style="margin-left: 100px">
+                                    <label for="sex">性别</label>
+                                    <select id="sex" name="sex" class="form-control"   style="width:150px;height: 40px; margin-left: 20px">
+                                        <option th:value="1">男</option>
+                                        <option th:value="2">女</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" style="margin-top: 20px">
+                                    <label for="email">邮箱地址</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="请输入邮箱" style=" margin-left: 5px">
+                                </div>
+
+                                <div class="form-group" style="margin-top: 20px;margin-left: 45px">
+                                    <label for="sourceType">政治面貌</label>
+                                    <select id="sourceType" name="sourceType" class="form-control" style="width:150px;height: 40px;margin-left: 5px">
+                                        <option th:value="1">不填写</option>
+                                        <option th:value="2">中共党员</option>
+                                        <option th:value="3">预备党员</option>
+                                        <option th:value="4">公青团员</option>
+                                        <option th:value="5">群众</option>
+                                    </select>
+                                </div>
+
+                                    <br>
+                                <div class="form-group" style="margin-top: 20px">
+                                    <label for="phone">手机号码</label>
+                                    <input type="phone" class="form-control" name="phone" id="phone" placeholder="请输入手机号码" style=" margin-left: 5px">
+                                </div>
+
+                                <br>
+                                <div class="form-group" style="margin-top: 20px">
+                                    <label for="qq">QQ</label>
+                                    <input type="text" name="qq" class="form-control" id="qq" placeholder="请输入QQ" style=" margin-left: 5px">
+                                </div>
+
+                                <br>
+                                <div class="form-group" style="margin-top: 20px">
+                                    <label for="nickName">民族</label>
+                                    <input type="text"  class="form-control" name="nickName" id="nickName" placeholder="请输入民族" style=" margin-left: 5px">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" id="sumbitButton"  onclick="add()">提交</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
+        </div>
+
+            <!--提示内容-->
+            <div class="mycontainer center-block" id="tip"  style="position:-webkit-sticky;visibility: hidden;
+            position: sticky;
+            top: 0;
+            width: 200px;
+            height: 100px;
+            background: rgba(0,0,0,0.5);
+            text-align: center;
+            line-height: 100px;
+            ">
+                <!--获取提交后的数据-->
+                <p id="msg" style="color: white; position: relative"></p>
+            </div>
+
+
+            <!--按钮点击后获取后台返回的信息 同时显示添加成功-->
+            <script th:inline="javascript">
+                $("#sumbitButton").click(function () {
+                    $("#tip").css("visibility","visible");
+                    <!--在js中获取返回的信息-->
+                    setTimeout(clear,1000)
+                });
+                function  clear() {
+                    $("#tip").css("visibility","hidden");
+                }
+            </script>
+
+
+        <!--自我评价  注意他的位置  因为和提示框重合了   不过提示框隐藏了 -->
+            <div class="container">
+             <div class="pull-left" style="font-family: 宋体;font-size: 20px;margin-left: 150px;margin-top: 0px"><strong>自我评价</strong></div>
+                <div class="pull-right" style="margin-right: 100px;margin-top:0px"><a style="color: deepskyblue;font-size: 15px;" data-toggle="modal"  data-target="#assessModal">编辑</a></div>
+                <!--显示自我评价-->
+                <div class="container pull-left" style="margin-left: 150px;margin-top: 0px">
+                <p style="margin-top: 10px">
+                    ◇ 熟练掌握 Spring、SpringMVC、MyBatis 等框架及 SSM 和SSH的整合技术；
+                    <br>
+                    ◇ 熟练使用Spring与其他框架整合进行Web开发;熟悉HTTP、TCP/IP协议;
+                    <br>
+                    ◇ 熟练运用MySql、Oracle 、Redis等数据库，熟悉linux操作系统的常用操作;
+                    <br>
+                    ◇ 熟悉jQuery、HTML、CSS、javaScript、bootstrap、jsp 、angularjs等WEB技术;
+                    <br>
+                    ◇ 了解dubbo 、springboot和git的的使用;
+                    <br>
+                </p>
+                </div>
+
+
+
+
+                <!--自我评价的模态框-->
+                <div class="modal fade" id="assessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="assessLabel">编辑自我评价</h4>
+                            </div>
+                            <div class="modal-body">
+                                <textarea class="form-control" rows="8"></textarea>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">提交更改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--下划线-->
+            <h5 class="page-header"></h5>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <div class="col-md-4"></div>
+</div>
+
+
+</body>
+</html>
