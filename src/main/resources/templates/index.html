@@ -8,13 +8,29 @@
     <title>前台</title>
     <!--jquery-->
     <script th:src="@{webjars/jquery/3.4.1/jquery.js}" ></script>
+
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+
+    <!--时间选择器-->
+    <link th:href="@{webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.css}">
+   <!-- <link href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css" rel="stylesheet">-->
+
+
+    <!--时间选择器-->
+    <script th:src="@{webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{webjars/bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+  <!--  <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>-->
+
+
+
     <!--index____script-->
     <script>
+        /*基本信息的提交*/
         function  add() {
 // 1.发送数据到后台
             var datafrom=$("#myform").serialize();
@@ -24,35 +40,43 @@
                 success:function (respone) {
                     $("#msg").html(respone.message);
                     if (respone.suceess) {     //添加成功   修改页面数据
+
                         //   1.修改姓名
                         $("#myname").html("");
-                        $("#myname").html("czj");
+                        $("#myname").html(respone.user[0].name);
 
-                        //     2.修改性别
+                   //     2.修改性别
                         $("#mysex").html("");
-                        if (respone.user.sex = 1) {
-                            $("#myname").html("男");
+                        if (respone.user[0].sex = 1) {
+                            $("#mysex").html("男");
                         } else {
-                            $("#myname").html("女");
+                            $("#mysex").html("女");
                         }
+
                         //  3.修改民族
-                        $("#myname").html("");
-                        $("#myname").html(respone.message.nickName + "|");
+                        $("#mynickName").html("");
+                        $("#mynickName").html(respone.user[0].nickName + "|");
                         //    4.修改政治面貌
-                        if (sourceType == 1) {
+                        if (respone.user[0].sourceType == 1) {
                             $("#sourceType").html("");
                         }
-                        if (sourceType == 2 || sourceType == 3 || sourceType == 4 || sourceType == 5 || sourceType == 3) {
-                            $("#myname").html("");
-                            $("#myname").html(respone.message.nickName + "|");
+                        if (respone.user[0].sourceType == 2 || respone.user[0].sourceType == 3 || respone.user[0].sourceType == 4 || respone.user[0].sourceType == 5) {
+                            $("#mysourceType").html("");
+                            $("#mysourceType").html(respone.user[0].nickName + "|");
                         }
+
                     //    修改手机号码
-                        $("#myname").html("");
-                        $("#myname").html(respone.message.nickName + "|");
+                        $("#myphone").html("");
+                        $("#myphone").html(respone.user[0].phone);
 
+                    //    修改更新时间
+                        $("#mytime").html("");
 
+                        $("#mytime").html(respone.updatetime);
+                        //    修改qq
+                        $("#myQQ").html("");
+                        $("#myQQ").html(respone.user[0].qq);
                     }
-
                 }
             });
 
@@ -60,9 +84,119 @@
         $("#baseModal").modal("hide");
         }
 
+        /*自我评价的提交*/
+        function accessadd() {
+
+            // 1.发送数据到后台
+            var datafrom=$("#accessform").serialize();
+            $.ajax({type:"post",
+                url:"/UpdateAccess",
+                data:datafrom,
+                success:function (respone) {
+                    $("#msg").html(respone.message);
+                    $("#myaccessContent").html(respone.content);
+                }
+            });
+            $("#assessModal").modal("hide");
+        }
+
+
+        /*教育背景信息的提交*/
+        function  teachadd() {
+            // 1.发送数据到后台
+            var datafrom=$("#teachform").serialize();
+            $.ajax({type:"post",
+                url:"/UpdateTeach",
+                data:datafrom,
+                success:function (respone) {
+                    $("#msg").html(respone.message);
+                    $("#TextschoolName").html(respone.user.schoolName);
+                    $("#TextTeachlevel").html(respone.user.teachlevel);
+                    $("#TextstartTime").html(respone.teachstarttime);
+                    $("#TextstartTime").html(respone.teachendtime);
+                }
+            });
+            $("#teachModal").modal("hide");
+        }
+
+        /*项目经验的提交*/
+        function itemadd() {
+            // 1.发送数据到后台
+            var datafrom=$("#itemform").serialize();
+            $.ajax({type:"post",
+                url:"/UpdateItem",
+                data:datafrom,
+                success:function (respone) {
+                alert(respone.TextItemstarttime);
+                    alert(respone.TextItemendtime);
+                    $("#msg").html(respone.message);
+                    $("#itemContent1").html(respone.item);
+                    $("#TextItemName").html(respone.TextItemName);
+                    $("#TextItemstarttime").html(respone.TextItemstarttime);
+                    $("#TextItemendtime").html(respone.TextItemendtime);
+                }
+            });
+            $("#itemModal").modal("hide");
+        }
+
+
+        function  showTime() {
+           /* alert("显示时间");*/
+        //   1.显示时间
+            $("#EditTime").css("visibility","hidden");
+        //    2.隐藏编辑
+           $("#SchoolAccountTime").css("visibility","visible");
+
+        }
+
+        function  hidenTime() {
+            /* alert("隐藏时间");*/
+            //   1.显示编辑
+            $("#EditTime").css("visibility","visible");
+            //    2.隐藏时间
+            $("#SchoolAccountTime").css("visibility","hidden");
+        }
+
+
+
+        function  showItemTime() {
+            //   1.显示时间
+            $("#itemTime1").css("visibility","hidden");
+            //    2.隐藏编辑
+            $("#itemAccountTime").css("visibility","visible");
+        }
+
+        function  hidenItemTime() {
+            /* alert("隐藏时间");*/
+            //   1.显示编辑
+            $("#itemTime1").css("visibility","visible");
+            //    2.隐藏时间
+            $("#itemAccountTime").css("visibility","hidden");
+        }
+
+
+
+        function  showItemTime1() {
+            //   1.显示时间
+            $("#itemTime2").css("visibility","hidden");
+            //    2.隐藏编辑
+            $("#itemAccountTime1").css("visibility","visible");
+        }
+
+        function  hidenItemTime1() {
+            /* alert("隐藏时间");*/
+            //   1.显示编辑
+            $("#itemTime2").css("visibility","visible");
+            //    2.隐藏时间
+            $("#itemAccountTime1").css("visibility","hidden");
+        }
+
 
 
     </script>
+
+
+
 
 
 </head>
@@ -83,7 +217,15 @@
             <li><a href="#">编辑作品集</a></li>
             <li><a href="#">登录</a></li>
             <li><a href="#">个人主页</a></li>
+
+            <div class="pull-right" style="margin-top: 10px;margin-right: 40px">
+              <span th:text="${username}" style="font-size: 15px;color: deepskyblue"></span>
+            </div>
         </ul>
+
+
+
+
     </div>
 </div>
 
@@ -96,7 +238,9 @@
         <div class="container" style="background-color: white">
         <!--时间   排版在最右边-->
             <div class="container">
-                <span class="text-muted pull-right" style="margin-top: 20px;margin-right: 15px">最后更新时间:2019/08/29</span>
+                <span class="text-muted pull-right" id="mytime" style="margin-top: 20px;margin-right: 15px">2019/08/29</span>
+                <span class="text-muted pull-right"  style="margin-top: 20px;margin-right:5px"> 最后更新时间:</span>
+
             </div>
         <!--上传的图片-->
             <div class="container">
@@ -119,7 +263,7 @@
            <!--民族|籍贯|政治面貌-->
             <div class="container" >
                 <div class="center-block" style="width:250px;text-align: center">
-                    <span style="font-family: 黑体;font-size:15px" class="text-muted">汉|</span>
+                    <span style="font-family: 黑体;font-size:15px" class="text-muted" id="mynickName">汉|</span>
                     <span style="font-family: 黑体;font-size:15px" class="text-muted" id="mysourceType">公青团员|</span>
                     <span style="font-family: 黑体;font-size:15px" class="text-muted">籍贯 广东 湛江</span>
                 </div>
@@ -128,10 +272,12 @@
 
             <!--联系方式居中显示-->
             <div class="container" style="margin-top: 10px">
-                <div class="center-block" style="width:300px;">
-                        <span class="glyphicon glyphicon-phone-alt pull-left" aria-hidden="true" id="myphone">13232708141</span>
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-left: 40px" id="myemail">851084575@qq.com</span>
-                        <span class="glyphicon glyphicon-user pull-left" aria-hidden="true" style="margin-top: 15px" id="myQQ"> 851084575</span>
+                <div class="center-block" style="width:350px; height: 50px">
+                        <span class="glyphicon glyphicon-phone-alt pull-left" aria-hidden="true" >
+                            <span id="myphone">13232708141</span></span>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-left: 40px;margin-top: 0" ><span id="myemail">851084575@qq.com</span></span>
+                        <span class="glyphicon glyphicon-user pull-left" aria-hidden="true" style="margin-top: 15px">
+                            <span  id="myQQ">851084575</span></span>
                 </div>
             </div>
 
@@ -224,7 +370,7 @@
             </div>
 
 
-            <!--按钮点击后获取后台返回的信息 同时显示添加成功-->
+            <!--个人信息按钮点击后获取后台返回的信息 同时显示添加成功-->
             <script th:inline="javascript">
                 $("#sumbitButton").click(function () {
                     $("#tip").css("visibility","visible");
@@ -243,7 +389,7 @@
                 <div class="pull-right" style="margin-right: 100px;margin-top:0px"><a style="color: deepskyblue;font-size: 15px;" data-toggle="modal"  data-target="#assessModal">编辑</a></div>
                 <!--显示自我评价-->
                 <div class="container pull-left" style="margin-left: 150px;margin-top: 0px">
-                <p style="margin-top: 10px">
+                <p style="margin-top: 10px" id="myaccessContent">
                     ◇ 熟练掌握 Spring、SpringMVC、MyBatis 等框架及 SSM 和SSH的整合技术；
                     <br>
                     ◇ 熟练使用Spring与其他框架整合进行Web开发;熟悉HTTP、TCP/IP协议;
@@ -269,16 +415,240 @@
                                 <h4 class="modal-title" id="assessLabel">编辑自我评价</h4>
                             </div>
                             <div class="modal-body">
-                                <textarea class="form-control" rows="8"></textarea>
+                                <form role="form" id="accessform">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="8" name="access"></textarea>
+                                    </div>
+                                </form>
                                 </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary">提交更改</button>
+                                <button type="button" class="btn btn-primary" id="accessButton" onclick="accessadd()">提交更改</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <!--自我评价按钮点击后获取后台返回的信息 同时显示添加成功-->
+            <script th:inline="javascript">
+                $("#accessButton").click(function () {
+                    $("#tip").css("visibility","visible");
+                    <!--在js中获取返回的信息-->
+                    setTimeout(clear,1000)
+                });
+                function  clear() {
+                    $("#tip").css("visibility","hidden");
+                }
+            </script>
+
+            <!--下划线-->
+            <h5 class="page-header"></h5>
+
+
+            <!--教育背景-->
+            <div class="container" style="margin-top: 50px">
+                <div class="pull-left" style="font-family: 宋体;font-size: 20px;margin-left: 150px;margin-top: 0px"><strong>教育背景</strong></div>
+                <div class="pull-right" style="margin-right: 100px;margin-top:0px"><a style="color: deepskyblue;font-size: 15px;" data-toggle="modal"  data-target="#teachModal">
+                    <span class="glyphicon glyphicon-plus"  style="color:deepskyblue " aria-hidden="true" ></span>
+                    新增</a></div>
+                <!--显示教育背景-->
+                <div class="container " style="margin-left: 150px;margin-top: 40px" onmouseover="hidenTime()" onmouseout="showTime()">
+                    <div class="pull-left">
+                        <p style="margin-top: 10px" id="TextschoolName">
+                            广东工业大学华立学院
+                            <br>
+                           <span id="TextTeachlevel">本科</span>
+                        </p>
+                    </div>
+                    <!--时间-->
+                    <div class="pull-right" style="margin-right:250px;margin-top:0px" id="SchoolAccountTime">
+                        <span class="text-muted" id="TextstartTime">2016.6 - </span>
+                                    <span id="TextendTime">2020.9</span>
+                    </div>
+
+                    <div class="pull-right" style="margin-right:-100px;margin-top:0px;visibility: hidden" id="EditTime">
+                        <a data-toggle="modal"  data-target="#teachModal"><span class="glyphicon glyphicon-pencil text-muted">编辑 |</span></a>
+                       <a href="#"> <span class="glyphicon glyphicon-trash text-muted">删除</span></a>
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+
+            <!--教育背景的模态框-->
+            <div class="modal fade" id="teachModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="teachLabel">添加教育背景</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <form class="form-inline" method="post" id="teachform" >
+                                <div class="form-group">
+                                    <label for="name">高校名称</label>
+                                    <input type="text" id="shcoolname"  name="shcoolname"   class="form-control" placeholder="请输入姓名" style="width:150px;height: 40px;margin-left: 20px">
+
+                                    <div class="form-group" style="margin-left: 45px">
+                                        <label for="sourceType">学历</label>
+                                        <select id="teachlevel" name="teachlevel" class="form-control" style="width:150px;">
+                                            <option th:value="1">博士</option>
+                                            <option th:value="2">硕士</option>
+                                            <option th:value="3">本科</option>
+                                            <option th:value="4">专科</option>
+                                            <option th:value="5">中专</option>
+                                            <option th:value="6">高中</option>
+                                            <option th:value="7">其他</option>
+                                        </select>
+                                    </div>
+                                    <!--就读时间-->
+                                    <div class="form-group"  style="margin-top: 30px;">
+                                        <label >就读时间</label>
+                                        <br>
+                                    <div class='input-group date'  id='datetimepicker1'>
+                                        <!--开始时间-->
+                                        <input type='text'  name="teachstarttime" class="form-control" readonly style="width: 100px;margin-left: 20px"/>
+                                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                         </span>
+                                    </div>
+                                        -----
+                                        <div class='input-group date'  id='datetimepicker2'>
+                                            <!--结束时间-->
+                                            <input type='text' name="teachendtime" class="form-control" readonly style="width: 100px"/>
+                                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                         </span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="teachButton" onclick="teachadd()">提交更改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--下划线-->
+            <h5 class="page-header"></h5>
+
+            <!--教育背景按钮点击后获取后台返回的信息 同时显示添加成功-->
+            <script th:inline="javascript">
+                $("#teachButton").click(function () {
+                    $("#tip").css("visibility","visible");
+                    <!--在js中获取返回的信息-->
+                    setTimeout(clear,1000)
+                });
+                function  clear() {
+                    $("#tip").css("visibility","hidden");
+                }
+            </script>
+
+
+            <!--时间选择器-->
+            <script type="text/javascript">
+                $('#datetimepicker1').datetimepicker({
+                    format: 'yyyy-mm-dd',
+                    pickerPosition: "bottom-left",
+                    minView: 2
+                });
+
+                $('#datetimepicker2').datetimepicker({
+                    format: 'yyyy-mm-dd',
+                    pickerPosition: "bottom-left",
+                    minView: 2
+                });
+            </script>
+
+
+
+
+            <!--项目经验-->
+            <div class="container" style="margin-top: 50px">
+                <div class="pull-left" style="font-family: 宋体;font-size: 20px;margin-left: 150px;margin-top: 0px"><strong>项目经验</strong></div>
+                <div class="pull-right" style="margin-right: 100px;margin-top:0px"><a style="color: deepskyblue;font-size: 15px;" data-toggle="modal"  data-target="#teachModal">
+                    <span class="glyphicon glyphicon-plus"  style="color:deepskyblue " aria-hidden="true" ></span>
+                    新增</a></div>
+                <!--显示项目经验-->
+                <div class="container " style="margin-left: 150px;margin-top: 40px" onmouseover="hidenItemTime()" onmouseout="showItemTime()">
+                    <div class="pull-left">
+                        <p style="margin-top: 10px;font-size: 20px" >
+                          <span id="TextItemName">知识猫</span>
+                        </p>
+                        <br>
+                        <p style="width: 500px" id="itemContent1">
+                            项目介绍:
+                            <br>
+                            此项目是主要针对学校校内教师上传学习资料和学生根据自己的需求下载资料的在线教育平台,在此中我们提交了教师管理的后台和                            学生浏览的前台。采用的bootstrap+ssm+mysql的环境下进行开发。
+                            <br>
+                            负责模块:
+                            1.参与项目的功能分析和设计，编写相关的技术文档和数据库(Mysql)的表设计。
+                            <br>
+                            2.主要实现对前端的编写,利用bootstrap框架加上html5和css3完成对页面的美化和部分功能的实现。
+                            <br>
+                            3.完成搜索功能的实现，采用solr框架对需要的查询字段加入到索引库和对关键字进行高亮显示。
+                            <br>
+                            4.对页面加载的视频进行缓存处理，主要是对视频的url添加到redis中
+                        </p>
+
+                    </div>
+
+                    <!--时间-->
+                    <div class="pull-right" style="margin-right:250px;margin-top:0px" id="itemAccountTime">
+                        <span class="text-muted" id="TextItemstarttime">2016.6 - </span>
+                        <span id="TextItemendtime">2020.9</span>
+                    </div>
+
+                    <div class="pull-right" style="margin-right:-100px;margin-top:0px;visibility: hidden" id="itemTime1">
+                        <a data-toggle="modal"  data-target="#itemModal"><span class="glyphicon glyphicon-pencil text-muted">编辑 |</span></a>
+                        <a href="#"> <span class="glyphicon glyphicon-trash text-muted">删除</span></a>
+                    </div>
+                </div>
+
+                    <!--CRM客户管理系统-->
+                <div class="container " style="margin-left: 150px;margin-top: 40px" onmouseover="hidenItemTime1()" onmouseout="showItemTime1()">
+                    <div class="pull-left">
+                        <p style="margin-top: 10px;font-size: 20px" >
+                            CRM客户管理系统
+                        </p>
+                        <br>
+                        <p style="width: 500px" id="itemContent2">
+                            项目介绍:
+                            <br>
+                            是一款管理客户关系的平台。主要是针对潜在用户和老客户信息登记的管理，业务员定期维护客户关系和挖掘一些有意向                                     的客户，对他们的反馈和信息进行写入系统。采用easyui+ssh+mysql环境下开发。
+                            <br>
+                            负责模块:
+                            <br>
+                            1.登录/注册模块:在登录后台的时候使用Shrio框架进行认证处理。
+                            <br>
+                            2.客户管理模块:对客户的信息进行增删改查等操作。
+                            <br>
+                            3.客户拜访记录管理:业务员登记添加客户拜访的信息和客户意向
+                            <br>
+                        </p>
+
+                    </div>
+                    <!--时间-->
+                    <div class="pull-right" style="margin-right:250px;margin-top:0px" id="itemAccountTime1">
+                        <span class="text-muted" >2016.6 - </span>
+                        <span>2020.9</span>
+                    </div>
+
+                    <div class="pull-right" style="margin-right:-100px;margin-top:0px;visibility: hidden"  id="itemTime2">
+                        <a data-toggle="modal"  data-target="#itemModal"><span class="glyphicon glyphicon-pencil text-muted">编辑 |</span></a>
+                        <a href="#"> <span class="glyphicon glyphicon-trash text-muted">删除</span></a>
+                    </div>
+                </div>
             </div>
 
 
@@ -286,13 +656,96 @@
             <h5 class="page-header"></h5>
 
 
+            <!--项目经验的模态框-->
+            <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="itemLabel">编辑项目经验</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="itemform">
 
+                                <div class="form-group">
+                                    <label for="itmename">项目名称</label>
+                                    <input type="text" id="itmename"  name="itmename"   class="form-control" placeholder="请输入项目名称" style="width:300px;height: 40px;margin-left: 20px"></div>
+
+                                <!--项目时间-->
+                                <div class="form-group"  style="margin-top: 30px;">
+                                    <label >项目时间</label>
+                                    <br>
+                                    <div class='input-group date pull-left'  id='datetimepicker3' style="width: 130px">
+                                        <!--开始时间-->
+                                        <input type='text'  name="itemstarttime" class="form-control" readonly/>
+                                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                         </span>
+                                    </div>
+                                <span>  -----</span>
+                                    <div class='input-group date pull-right'  id='datetimepicker4'style="width: 130px;margin-right: 280px">
+                                        <!--结束时间-->
+                                        <input type='text' name="itemendtime" class="form-control" readonly/>
+                                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                         </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group" style="margin-top: 45px">
+                                    详细描述
+                                    <br>
+                                    <textarea class="form-control" rows="8" name="item"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="itemButton" onclick="itemadd()">提交更改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
 
+        <!--时间选择器-->
+        <script type="text/javascript">
+            $('#datetimepicker3').datetimepicker({
+                format: 'yyyy-mm-dd',
+                pickerPosition: "bottom-left",
+                minView: 2
+            });
 
-    </div>
+            $('#datetimepicker4').datetimepicker({
+                format: 'yyyy-mm-dd',
+                pickerPosition: "bottom-left",
+                minView: 2
+            });
+        </script>
+
+
+        <script th:inline="javascript">
+            $("#itemButton").click(function () {
+                $("#tip").css("visibility","visible");
+                <!--在js中获取返回的信息-->
+                setTimeout(clear,1000)
+            });
+            function  clear() {
+                $("#tip").css("visibility","hidden");
+            }
+        </script>
+
+
+
+        </div>
+
+
+        </div>
+</div>
 
 
 

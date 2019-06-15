@@ -30,23 +30,57 @@ public class user implements Serializable{
 
     private String qq;
 
-    private Long accountBalance;
-
-    private String isMobileCheck;
-
-    private String isEmailCheck;
-
     private String sex;
 
-    private Integer userLevel;
+    private  String content;
 
-    private Integer points;
+    private String schoolName;
 
-    private Integer experienceValue;
+    private  String teachlevel;
 
-    private Date birthday;
+    private  Date teachstarttime;
 
-    private Date lastLoginTime;
+    private  Date teachendtime;
+
+    private  String  item;
+
+    private Date itemstarttime;
+
+    private  Date itemendtime;
+
+    private  String itmename;
+
+    public Date getItemstarttime() {
+        return itemstarttime;
+    }
+
+    public void setItemstarttime(Date itemstarttime) {
+        this.itemstarttime = itemstarttime;
+    }
+
+    public Date getItemendtime() {
+        return itemendtime;
+    }
+
+    public void setItemendtime(Date itemendtime) {
+        this.itemendtime = itemendtime;
+    }
+
+    public String getItmename() {
+        return itmename;
+    }
+
+    public void setItmename(String itmename) {
+        this.itmename = itmename;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
 
     public Long getId() {
         return id;
@@ -61,7 +95,7 @@ public class user implements Serializable{
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
     public String getPassword() {
@@ -69,7 +103,7 @@ public class user implements Serializable{
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public String getPhone() {
@@ -77,7 +111,7 @@ public class user implements Serializable{
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -85,7 +119,7 @@ public class user implements Serializable{
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
     }
 
     public Date getCreated() {
@@ -109,7 +143,7 @@ public class user implements Serializable{
     }
 
     public void setSourceType(String sourceType) {
-        this.sourceType = sourceType == null ? null : sourceType.trim();
+        this.sourceType = sourceType;
     }
 
     public String getNickName() {
@@ -117,7 +151,7 @@ public class user implements Serializable{
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+        this.nickName = nickName;
     }
 
     public String getName() {
@@ -125,7 +159,7 @@ public class user implements Serializable{
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getStatus() {
@@ -133,7 +167,7 @@ public class user implements Serializable{
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
     }
 
     public String getHeadPic() {
@@ -141,7 +175,7 @@ public class user implements Serializable{
     }
 
     public void setHeadPic(String headPic) {
-        this.headPic = headPic == null ? null : headPic.trim();
+        this.headPic = headPic;
     }
 
     public String getQq() {
@@ -149,31 +183,7 @@ public class user implements Serializable{
     }
 
     public void setQq(String qq) {
-        this.qq = qq == null ? null : qq.trim();
-    }
-
-    public Long getAccountBalance() {
-        return accountBalance;
-    }
-
-    public void setAccountBalance(Long accountBalance) {
-        this.accountBalance = accountBalance;
-    }
-
-    public String getIsMobileCheck() {
-        return isMobileCheck;
-    }
-
-    public void setIsMobileCheck(String isMobileCheck) {
-        this.isMobileCheck = isMobileCheck == null ? null : isMobileCheck.trim();
-    }
-
-    public String getIsEmailCheck() {
-        return isEmailCheck;
-    }
-
-    public void setIsEmailCheck(String isEmailCheck) {
-        this.isEmailCheck = isEmailCheck == null ? null : isEmailCheck.trim();
+        this.qq = qq;
     }
 
     public String getSex() {
@@ -181,49 +191,48 @@ public class user implements Serializable{
     }
 
     public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+        this.sex = sex;
     }
 
-    public Integer getUserLevel() {
-        return userLevel;
+    public String getContent() {
+        return content;
     }
 
-    public void setUserLevel(Integer userLevel) {
-        this.userLevel = userLevel;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Integer getPoints() {
-        return points;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
-    public Integer getExperienceValue() {
-        return experienceValue;
+    public String getTeachlevel() {
+        return teachlevel;
     }
 
-    public void setExperienceValue(Integer experienceValue) {
-        this.experienceValue = experienceValue;
+    public void setTeachlevel(String teachlevel) {
+        this.teachlevel = teachlevel;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Date getTeachstarttime() {
+        return teachstarttime;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setTeachstarttime(Date teachstarttime) {
+        this.teachstarttime = teachstarttime;
     }
 
-    public Date getLastLoginTime() {
-        return lastLoginTime;
+    public Date getTeachendtime() {
+        return teachendtime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+    public void setTeachendtime(Date teachendtime) {
+        this.teachendtime = teachendtime;
     }
-
 
     user(){
         super();
@@ -245,15 +254,16 @@ public class user implements Serializable{
                 ", status='" + status + '\'' +
                 ", headPic='" + headPic + '\'' +
                 ", qq='" + qq + '\'' +
-                ", accountBalance=" + accountBalance +
-                ", isMobileCheck='" + isMobileCheck + '\'' +
-                ", isEmailCheck='" + isEmailCheck + '\'' +
                 ", sex='" + sex + '\'' +
-                ", userLevel=" + userLevel +
-                ", points=" + points +
-                ", experienceValue=" + experienceValue +
-                ", birthday=" + birthday +
-                ", lastLoginTime=" + lastLoginTime +
+                ", content='" + content + '\'' +
+                ", schoolName='" + schoolName + '\'' +
+                ", teachlevel='" + teachlevel + '\'' +
+                ", teachstarttime=" + teachstarttime +
+                ", teachendtime=" + teachendtime +
+                ", item='" + item + '\'' +
+                ", itemstarttime=" + itemstarttime +
+                ", itemendtime=" + itemendtime +
+                ", itmename='" + itmename + '\'' +
                 '}';
     }
 }
